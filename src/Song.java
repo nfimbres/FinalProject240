@@ -7,4 +7,18 @@ public class Song {
         this.artist = artist;
         rating = 0;
     }
+    public void sav(){
+    }
+    public String getName() {
+    }
+    public String getArtist() {
+    }
+    public int getRating() {
+    }
+    public void setName() {
+    }
+    public void setArtist() {
+    }
+    public void setRating() {
+    }
 }
