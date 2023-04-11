@@ -21,4 +21,3 @@ public class Playlist {
     public String getFileName() {
     }
 }
-
