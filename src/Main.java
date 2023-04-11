@@ -19,10 +19,8 @@ public class Main {
     public static void reorderPlaylist(){
     }
     public static ArrayList<String> getPlaylists(){
-        return new ArrayList<>();
     }
     public static Playlist choosePlaylist(){
-        return new Playlist();
     }
     public static void ask(){
     }
