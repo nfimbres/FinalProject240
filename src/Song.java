@@ -1,3 +1,5 @@
+import java.io.PrintWriter;
+
 public class Song {
     private String name;
     private String artist;
@@ -7,13 +9,19 @@ public class Song {
         this.artist = artist;
         rating = 0;
     }
-    public void sav(){
+    public void save(PrintWriter out) {
+        out.print(this.name+"\n");
+        out.print(this.artist+"\n");
+        out.print(this.rating+"\n\n");
     }
     public String getName() {
+        return "";
     }
     public String getArtist() {
+        return "";
     }
     public int getRating() {
+        return 0;
     }
     public void setName() {
     }
