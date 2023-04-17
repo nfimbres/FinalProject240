@@ -9,7 +9,7 @@ public class Playlist {
     public Playlist() {
     }
     public Playlist(String fileName) {
-        this.fileName = fileName;
+        this.fileName = "./playlists/"+fileName+".playlist";
     }
     public void save() throws IOException {
         File file = new File(this.fileName);

@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class ButtonListener implements ActionListener {
     private int option;
@@ -16,7 +17,13 @@ public class ButtonListener implements ActionListener {
         } else if(this.option==2) {
             Main.shufflePlaylist();
         } else if(this.option==3) {
-            Main.exit();
+            try {
+                Main.exit();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        } else if(this.option==4) {
+
         }
     }
 }

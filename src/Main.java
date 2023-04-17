@@ -1,11 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main {
     public static ArrayList<Playlist> playlists = new ArrayList<>();
     public static JFrame mainFrame = new JFrame();
     public static JFrame newPlaylistFrame = new JFrame();
+    public static JFrame playlistsFrame = new JFrame();
 
     public static void main(String[] args) {
         //create frame
@@ -67,6 +69,13 @@ public class Main {
     }
     public static void ask(){
     }
-    public static void exit(){
+    public static void save() throws IOException {
+        for(Playlist p : playlists) {
+            p.save();
+        }
+    }
+    public static void exit() throws IOException {
+        save();
+        System.exit(0);
     }
 }

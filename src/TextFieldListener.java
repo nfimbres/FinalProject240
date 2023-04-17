@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class TextFieldListener implements ActionListener {
     private int option;
@@ -14,7 +15,13 @@ public class TextFieldListener implements ActionListener {
         if(this.option==0) {
             String playlistName = textField.getText();
             JOptionPane.showMessageDialog(null,playlistName+ " has been created");
-            Main.playlists.add(new Playlist(playlistName));
+            Playlist playlist = new Playlist(playlistName);
+            try {
+                playlist.save();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            Main.playlists.add(playlist);
             Main.newPlaylistFrame.dispose();
         } else if(this.option==1) {
             Main.editPlaylist();
