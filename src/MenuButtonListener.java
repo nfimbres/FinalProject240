@@ -3,9 +3,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class ButtonListener implements ActionListener {
+public class MenuButtonListener implements ActionListener {
+    private String buttonName;
     private int option;
-    public ButtonListener(int option) {
+    public MenuButtonListener(int option) {
         this.option = option;
     }
     @Override
@@ -13,7 +14,7 @@ public class ButtonListener implements ActionListener {
         if(this.option==0) {
             Main.newPlaylist();
         } else if(this.option==1) {
-            Main.editPlaylist();
+            Main.choosePlaylist();
         } else if(this.option==2) {
             Main.shufflePlaylist();
         } else if(this.option==3) {
@@ -22,8 +23,6 @@ public class ButtonListener implements ActionListener {
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-        } else if(this.option==4) {
-
         }
     }
 }
