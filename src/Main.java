@@ -15,10 +15,10 @@ public class Main {
         mainFrame.getContentPane().setLayout(new BoxLayout(mainFrame.getContentPane(), BoxLayout.Y_AXIS));
 
         //buttons
-        addButton("New Playlist",0);
-        addButton("Shuffle Playlist",1);
-        addButton("Edit Playlist",2);
-        addButton("Exit",3);
+        addButton("New Playlist",mainFrame,0);
+        addButton("Edit Playlist",mainFrame,1);
+        addButton("Shuffle Playlist",mainFrame,2);
+        addButton("Exit",mainFrame,3);
         //display
         mainFrame.pack();
         mainFrame.setSize(150,150);
@@ -29,14 +29,14 @@ public class Main {
         JLabel label = new JLabel(text);
         j.getContentPane().add(label);
     }
-    public static void addButton(String text, int option) {
+    public static void addButton(String text,JFrame j, int option) {
         JButton button = new JButton(text);
         button.addActionListener(new ButtonListener(option));
-        mainFrame.getContentPane().add(button);
+        j.getContentPane().add(button);
     }
-    public static void addButton(String text, JFrame j, JTextField t, int option,JFrame f) {
+    public static void addButton(String text, JFrame j, JTextField t, int option) {
         JButton button = new JButton(text);
-        button.addActionListener(new TextFieldListener(t,option,f));
+        button.addActionListener(new TextFieldListener(t,option,j));
         j.getContentPane().add(button);
     }
     public static void newPlaylist(){
@@ -47,7 +47,7 @@ public class Main {
         //buttons
         JTextField textField = new JTextField();
         newPlaylistFrame.getContentPane().add(textField);
-        addButton("Create",newPlaylistFrame,textField,0,newPlaylistFrame);
+        addButton("Create",newPlaylistFrame,textField,0);
 
         //display
         newPlaylistFrame.pack();
@@ -55,7 +55,22 @@ public class Main {
         newPlaylistFrame.setLocationRelativeTo(null);
         newPlaylistFrame.setVisible(true);
     }
-    public static void editPlaylist(){
+    public static void editPlaylist() {
+        if (playlists.size() > 0) {
+            playlistsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            playlistsFrame.getContentPane().setLayout(new BoxLayout(newPlaylistFrame.getContentPane(), BoxLayout.Y_AXIS));
+            addLabel("Choose a playlist to edit", playlistsFrame); //add a label
+            for (Playlist p : playlists) {
+                addButton(p.getName(), playlistsFrame, 4);
+            }
+            //display
+            playlistsFrame.pack();
+            playlistsFrame.setSize(150, 150);
+            playlistsFrame.setLocationRelativeTo(null);
+            playlistsFrame.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null,"There are no playlists to edit");
+        }
     }
     public static void shufflePlaylist(){
     }

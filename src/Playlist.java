@@ -4,12 +4,14 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Playlist {
+    private String name;
     private String fileName;
     private ArrayList<Song> songs;
     public Playlist() {
     }
-    public Playlist(String fileName) {
-        this.fileName = "./playlists/"+fileName+".playlist";
+    public Playlist(String name) {
+        this.name = name;
+        this.fileName = "./playlists/"+name+".playlist";
     }
     public void save() throws IOException {
         File file = new File(this.fileName);
@@ -29,7 +31,10 @@ public class Playlist {
     }
     public void reorder(int order) {
     }
+    public String getName() {
+        return name;
+    }
     public String getFileName() {
-        return "";
+        return fileName;
     }
 }
