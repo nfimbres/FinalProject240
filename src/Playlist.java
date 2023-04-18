@@ -30,6 +30,6 @@ public class Playlist {
     public void reorder(int order) {
     }
     public String getFileName() {
-        return "";
+        return this.fileName;
     }
 }

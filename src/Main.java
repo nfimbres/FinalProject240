@@ -2,23 +2,28 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.io.FileInputStream;
+import java.util.Scanner;
 
 public class Main {
     public static ArrayList<Playlist> playlists = new ArrayList<>();
     public static JFrame mainFrame = new JFrame();
     public static JFrame newPlaylistFrame = new JFrame();
+    public static JFrame editPlaylistFrame = new JFrame();
     public static JFrame playlistsFrame = new JFrame();
 
+
     public static void main(String[] args) {
+        JFrame mainFrame = new JFrame();
         //create frame
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.getContentPane().setLayout(new BoxLayout(mainFrame.getContentPane(), BoxLayout.Y_AXIS));
 
         //buttons
-        addButton("New Playlist",0);
-        addButton("Shuffle Playlist",1);
-        addButton("Edit Playlist",2);
-        addButton("Exit",3);
+        addButton("New Playlist",0,mainFrame);
+        addButton("Edit Playlist",1,mainFrame);
+        addButton("Shuffle Playlist",2,mainFrame);
+        addButton("Exit",3,mainFrame);
         //display
         mainFrame.pack();
         mainFrame.setSize(150,150);
@@ -29,10 +34,10 @@ public class Main {
         JLabel label = new JLabel(text);
         j.getContentPane().add(label);
     }
-    public static void addButton(String text, int option) {
+    public static void addButton(String text, int option, JFrame mF) {
         JButton button = new JButton(text);
         button.addActionListener(new ButtonListener(option));
-        mainFrame.getContentPane().add(button);
+        mF.getContentPane().add(button);
     }
     public static void addButton(String text, JFrame j, JTextField t, int option,JFrame f) {
         JButton button = new JButton(text);
@@ -56,15 +61,36 @@ public class Main {
         newPlaylistFrame.setVisible(true);
     }
     public static void editPlaylist(){
+        editPlaylistFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        editPlaylistFrame.getContentPane().setLayout(new BoxLayout(editPlaylistFrame.getContentPane(), BoxLayout.Y_AXIS));
+        addLabel("Please choose which playlist you wish to edit", editPlaylistFrame);
+        choosePlaylist();
+
+
+        addButton("Add Song",1,editPlaylistFrame);
+        addButton("Remove Song",1,editPlaylistFrame);
+
+        editPlaylistFrame.pack();
+        editPlaylistFrame.setSize(150,150);
+        editPlaylistFrame.setLocationRelativeTo(null);
+        editPlaylistFrame.setVisible(true);
     }
     public static void shufflePlaylist(){
+        choosePlaylist();
     }
     public static void reorderPlaylist(){
+        choosePlaylist();
     }
     public static ArrayList<String> getPlaylists(){
-        return new ArrayList<>();
+        ArrayList<String> PLN = new ArrayList<String>();
+        for(int i = 0; i>playlists.size(); i++)
+        {
+            PLN.add(playlists.get(i).getFileName());
+        }
+        return PLN;
     }
     public static Playlist choosePlaylist(){
+        getPlaylists();
         return new Playlist();
     }
     public static void ask(){
