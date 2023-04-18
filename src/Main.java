@@ -7,6 +7,7 @@ public class Main {
     public static ArrayList<Playlist> playlists = new ArrayList<>();
     public static JFrame mainFrame = new JFrame();
     public static JFrame newPlaylistFrame = new JFrame();
+    public static JFrame editPlaylistFrame = new JFrame();
     public static JFrame playlistsFrame = new JFrame();
 
     public static void main(String[] args) {
@@ -16,8 +17,8 @@ public class Main {
 
         //buttons
         addButton("New Playlist",0);
-        addButton("Shuffle Playlist",1);
-        addButton("Edit Playlist",2);
+        addButton("Edit Playlist",1);
+        addButton("Shuffle Playlist",2);
         addButton("Exit",3);
         //display
         mainFrame.pack();
@@ -56,15 +57,33 @@ public class Main {
         newPlaylistFrame.setVisible(true);
     }
     public static void editPlaylist(){
+        editPlaylistFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        editPlaylistFrame.getContentPane().setLayout(new BoxLayout(editPlaylistFrame.getContentPane(), BoxLayout.Y_AXIS));
+        addLabel("Please choose which playlist you wish to edit", editPlaylistFrame);
+        choosePlaylist();
+
+
+        editPlaylistFrame.pack();
+        editPlaylistFrame.setSize(150,150);
+        editPlaylistFrame.setLocationRelativeTo(null);
+        editPlaylistFrame.setVisible(true);
     }
     public static void shufflePlaylist(){
     }
     public static void reorderPlaylist(){
     }
     public static ArrayList<String> getPlaylists(){
-        return new ArrayList<>();
+
+        ArrayList<String> PLN = new ArrayList<String>();
+        for(int i = 0; i>playlists.size(); i++)
+        {
+            PLN.add(playlists.get(i).getFileName());
+        }
+        return PLN;
     }
     public static Playlist choosePlaylist(){
+
+        getPlaylists();
         return new Playlist();
     }
     public static void ask(){
