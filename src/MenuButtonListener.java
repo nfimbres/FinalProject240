@@ -15,8 +15,12 @@ public class MenuButtonListener implements ActionListener {
             Main.newPlaylist();
             Main.mainFrame.setVisible(false);
         } else if(this.option==1) {
-            Main.choosePlaylist();
-            Main.mainFrame.setVisible(false);
+            if(Main.playlists.size()>0) {
+                Main.choosePlaylist();
+                Main.mainFrame.setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(null,"There are no playlists to edit.");
+            }
         } else if(this.option==2) {
             Main.shufflePlaylist();
         } else if(this.option==3) {
