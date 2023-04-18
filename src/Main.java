@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -7,10 +6,13 @@ public class Main {
     public static ArrayList<Playlist> playlists = new ArrayList<>();
     public static JFrame mainFrame = new JFrame();
     public static JFrame newPlaylistFrame = new JFrame();
-    public static JFrame editPlaylistFrame = new JFrame();
-    public static JFrame playlistsFrame = new JFrame();
+    public static JFrame choosePlaylistFrame = new JFrame();
+    public static JFrame editplaylistFrame = new JFrame();
 
     public static void main(String[] args) {
+        //download playlists from directory
+        getPlaylists();
+
         //create frame
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.getContentPane().setLayout(new BoxLayout(mainFrame.getContentPane(), BoxLayout.Y_AXIS));
@@ -63,18 +65,18 @@ public class Main {
         newPlaylistFrame.setVisible(true);
     }
     public static void choosePlaylist(){
-        editPlaylistFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        editPlaylistFrame.getContentPane().setLayout(new BoxLayout(editPlaylistFrame.getContentPane(),BoxLayout.Y_AXIS));
-        addLabel("Please choose which playlist you wish to edit", editPlaylistFrame);
+        choosePlaylistFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        choosePlaylistFrame.getContentPane().setLayout(new BoxLayout(choosePlaylistFrame.getContentPane(),BoxLayout.Y_AXIS));
+        addLabel("Please choose which playlist you wish to edit", choosePlaylistFrame);
 
         for(Playlist p : playlists) {
-            addButton(p.getName(),editPlaylistFrame,p);
+            addButton(p.getName(),choosePlaylistFrame,p);
         }
 
-        editPlaylistFrame.pack();
-        editPlaylistFrame.setSize(300,150);
-        editPlaylistFrame.setLocationRelativeTo(null);
-        editPlaylistFrame.setVisible(true);
+        choosePlaylistFrame.pack();
+        choosePlaylistFrame.setSize(300,150);
+        choosePlaylistFrame.setLocationRelativeTo(null);
+        choosePlaylistFrame.setVisible(true);
     }
     public static void editPlaylist(Playlist playlist){
 
@@ -83,14 +85,9 @@ public class Main {
     }
     public static void reorderPlaylist(){
     }
-    public static ArrayList<String> getPlaylists(){
-
-        ArrayList<String> PLN = new ArrayList<String>();
-        for(int i = 0; i>playlists.size(); i++)
-        {
-            PLN.add(playlists.get(i).getFileName());
-        }
-        return PLN;
+    public static void getPlaylists() {
+        //this method need to get the files from the playlists directory then create playlists
+        //and add them to playlists
     }
     public static void ask(){
     }

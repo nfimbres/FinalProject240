@@ -12,5 +12,7 @@ public class PlaylistButtonListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) { // method for when the button is clicked
         Main.editPlaylist(playlist);
+        Main.choosePlaylistFrame.dispose();
+        Main.mainFrame.setVisible(true);
     }
 }

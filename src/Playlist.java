@@ -8,6 +8,7 @@ public class Playlist {
     private String fileName;
     private ArrayList<Song> songs;
     public Playlist() {
+
     }
     public Playlist(String name) {
         this.name = name;

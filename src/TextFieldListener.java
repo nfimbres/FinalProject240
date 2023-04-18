@@ -20,5 +20,6 @@ public class TextFieldListener implements ActionListener {
         }
         Main.playlists.add(playlist);
         Main.newPlaylistFrame.dispose();
+        Main.mainFrame.setVisible(true);
         }
 }

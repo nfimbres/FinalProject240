@@ -13,8 +13,10 @@ public class MenuButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent e) { // method for when the button is clicked
         if(this.option==0) {
             Main.newPlaylist();
+            Main.mainFrame.setVisible(false);
         } else if(this.option==1) {
             Main.choosePlaylist();
+            Main.mainFrame.setVisible(false);
         } else if(this.option==2) {
             Main.shufflePlaylist();
         } else if(this.option==3) {
