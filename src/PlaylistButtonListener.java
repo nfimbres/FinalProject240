@@ -13,6 +13,7 @@ public class PlaylistButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent e) { // method for when the button is clicked
         Main.editPlaylist(playlist);
         Main.choosePlaylistFrame.dispose();
+        Main.choosePlaylistFrame.removeAll();
         Main.mainFrame.setVisible(true);
     }
 }

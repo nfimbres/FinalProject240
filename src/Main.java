@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -9,7 +11,7 @@ public class Main {
     public static JFrame choosePlaylistFrame = new JFrame();
     public static JFrame editplaylistFrame = new JFrame();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         //download playlists from directory
         getPlaylists();
 
@@ -85,9 +87,18 @@ public class Main {
     }
     public static void reorderPlaylist(){
     }
-    public static void getPlaylists() {
-        //this method need to get the files from the playlists directory then create playlists
-        //and add them to playlists
+    public static void getPlaylists() throws FileNotFoundException {
+        File folder = new File("./playlists/");
+        File[] listOfFiles = folder.listFiles();
+        ArrayList<String> playlistNames = new ArrayList<String>();
+        for(File f : listOfFiles) {
+            playlists.add(new Playlist(String.valueOf(f),1));
+        }
+        for(Playlist p : playlists) {
+            for(Song s : p.getSongs()) {
+                JOptionPane.showMessageDialog(null,s.songDetails());
+            }
+        }
     }
     public static void ask(){
     }
