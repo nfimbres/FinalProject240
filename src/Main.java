@@ -81,7 +81,6 @@ public class Main {
         choosePlaylistFrame.setVisible(true);
     }
     public static void editPlaylist(Playlist playlist){
-
     }
     public static void shufflePlaylist(){
     }
@@ -99,8 +98,6 @@ public class Main {
                 JOptionPane.showMessageDialog(null,s.songDetails());
             }
         }
-    }
-    public static void ask(){
     }
     public static void save() throws IOException {
         for(Playlist p : playlists) {
