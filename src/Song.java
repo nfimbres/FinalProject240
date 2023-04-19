@@ -15,15 +15,12 @@ public class Song  implements Comparable<Song>{
         out.print(this.rating+"\n\n");
     }
     public String getName() {
-        String name = this.name;
         return name;
     }
     public String getArtist() {
-        String artist = this.artist;
         return artist;
     }
     public int getRating() {
-        int rating = this.rating;
         return rating;
     }
     public void setName(String n) {

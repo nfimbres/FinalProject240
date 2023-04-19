@@ -81,10 +81,28 @@ public class Main {
         choosePlaylistFrame.setVisible(true);
     }
     public static void editPlaylist(Playlist playlist){
+        try {
+            getPlaylists();
+            JOptionPane.showMessageDialog(null,"Would you like to add or remove songs?");
+            //add button for adding and removing
+
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null,"No playlists found");
+        }
     }
     public static void shufflePlaylist(){
+        try {
+            getPlaylists();
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null,"No playlists found");
+        }
     }
     public static void reorderPlaylist(){
+        try {
+            getPlaylists();
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null,"No playlists found");
+        }
     }
     public static void getPlaylists() throws FileNotFoundException {
         File folder = new File("./playlists/");
