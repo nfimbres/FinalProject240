@@ -16,8 +16,7 @@ public class Main {
         getPlaylists();
 
         //create frame
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.getContentPane().setLayout(new BoxLayout(mainFrame.getContentPane(), BoxLayout.Y_AXIS));
+        setFrame(mainFrame,true);
 
         //buttons
         addButton("New Playlist",mainFrame,0);
@@ -26,34 +25,10 @@ public class Main {
         addButton("Exit",mainFrame,3);
 
         //display
-        mainFrame.pack();
-        mainFrame.setSize(150,150);
-        mainFrame.setLocationRelativeTo(null);
-        mainFrame.setVisible(true);
-    }
-    public static void addLabel(String text, JFrame j) {
-        JLabel label = new JLabel(text);
-        j.getContentPane().add(label);
-    }
-    public static void addButton(String text, JFrame frame, int option) {
-        JButton button = new JButton(text);
-        button.addActionListener(new MenuButtonListener(option));
-        frame.getContentPane().add(button);
-    }
-    public static void addButton(String text, JFrame frame, JTextField t) {
-        JButton button = new JButton(text);
-        button.addActionListener(new TextFieldListener(t));
-        frame.getContentPane().add(button);
-    }
-    public static void addButton(String text, JFrame frame, Playlist p) {
-        JButton button = new JButton(text);
-        button.addActionListener(new PlaylistButtonListener(p));
-        frame.getContentPane().add(button);
+        displayFrame(mainFrame);
     }
     public static void newPlaylist(){
-        newPlaylistFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        newPlaylistFrame.getContentPane().setLayout(new BoxLayout(newPlaylistFrame.getContentPane(), BoxLayout.Y_AXIS));
-        addLabel("Enter a playlist name", newPlaylistFrame); //add a label
+        setFrame(newPlaylistFrame,"Enter a playlist name",false);
 
         //buttons
         JTextField textField = new JTextField();
@@ -61,27 +36,27 @@ public class Main {
         addButton("Create",newPlaylistFrame,textField);
 
         //display
-        newPlaylistFrame.pack();
-        newPlaylistFrame.setSize(150,150);
-        newPlaylistFrame.setLocationRelativeTo(null);
-        newPlaylistFrame.setVisible(true);
+        displayFrame(newPlaylistFrame);
     }
     public static void choosePlaylist(){
-        choosePlaylistFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        choosePlaylistFrame.getContentPane().setLayout(new BoxLayout(choosePlaylistFrame.getContentPane(),BoxLayout.Y_AXIS));
-        addLabel("Please choose which playlist you wish to edit", choosePlaylistFrame);
+        setFrame(choosePlaylistFrame,"Please choose which playlist you wish to edit",false);
 
+        //buttons
         for(Playlist p : playlists) {
             addButton(p.getName(),choosePlaylistFrame,p);
         }
 
-        choosePlaylistFrame.pack();
-        choosePlaylistFrame.setSize(150,150);
-        choosePlaylistFrame.setLocationRelativeTo(null);
-        choosePlaylistFrame.setVisible(true);
+        displayFrame(choosePlaylistFrame);
     }
     public static void editPlaylist(Playlist playlist){
+        setFrame(editplaylistFrame,"Would you like to add or remove songs",false);
 
+        //buttons
+        addButton("Add",editplaylistFrame,4);
+        addButton("Remove",editplaylistFrame,4);
+
+        //display
+        displayFrame(editplaylistFrame);
     }
     public static void shufflePlaylist(){
         try {
@@ -110,6 +85,25 @@ public class Main {
             }
         }
     }
+    public static void addLabel(String text, JFrame j) {
+        JLabel label = new JLabel(text);
+        j.getContentPane().add(label);
+    }
+    public static void addButton(String text, JFrame frame, Playlist p) {
+        JButton button = new JButton(text);
+        button.addActionListener(new PlaylistButtonListener(p));
+        frame.getContentPane().add(button);
+    }
+    public static void addButton(String text, JFrame frame, int option) {
+        JButton button = new JButton(text);
+        button.addActionListener(new MenuButtonListener(option));
+        frame.getContentPane().add(button);
+    }
+    public static void addButton(String text, JFrame frame, JTextField t) {
+        JButton button = new JButton(text);
+        button.addActionListener(new TextFieldListener(t));
+        frame.getContentPane().add(button);
+    }
     public static void save() throws IOException {
         for(Playlist p : playlists) {
             p.save();
@@ -119,7 +113,30 @@ public class Main {
         save();
         System.exit(0);
     }
-    public static void clearFrame(JFrame f) {
+    public static void clearFrame(JFrame frame) {
 
+    }
+    public static void setFrame(JFrame frame, boolean exit) {
+        if(exit) {
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        } else {
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        }
+        frame.getContentPane().setLayout(new BoxLayout(newPlaylistFrame.getContentPane(), BoxLayout.Y_AXIS));
+    }
+    public static void setFrame(JFrame frame, String label, boolean exit) {
+        if(exit) {
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        } else {
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        }
+        frame.getContentPane().setLayout(new BoxLayout(newPlaylistFrame.getContentPane(), BoxLayout.Y_AXIS));
+        addLabel(label, frame);
+    }
+    public static void displayFrame(JFrame frame) {
+        frame.pack();
+        frame.setSize(150,150);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 }
