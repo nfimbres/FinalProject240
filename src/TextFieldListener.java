@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class TextFieldListener implements ActionListener {
@@ -21,8 +20,8 @@ public class TextFieldListener implements ActionListener {
             throw new RuntimeException(ex);
         }
         Main.playlists.add(playlist);
+        Main.clearFrame(Main.newPlaylistFrame);
         Main.newPlaylistFrame.dispose();
-        Main.newPlaylistFrame.removeAll();
         Main.mainFrame.setVisible(true);
         }
 }

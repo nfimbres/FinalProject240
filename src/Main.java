@@ -76,19 +76,12 @@ public class Main {
         }
 
         choosePlaylistFrame.pack();
-        choosePlaylistFrame.setSize(300,150);
+        choosePlaylistFrame.setSize(150,150);
         choosePlaylistFrame.setLocationRelativeTo(null);
         choosePlaylistFrame.setVisible(true);
     }
     public static void editPlaylist(Playlist playlist){
-        try {
-            getPlaylists();
-            JOptionPane.showMessageDialog(null,"Would you like to add or remove songs?");
-            //add button for adding and removing
 
-        } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null,"No playlists found");
-        }
     }
     public static void shufflePlaylist(){
         try {
@@ -125,5 +118,8 @@ public class Main {
     public static void exit() throws IOException {
         save();
         System.exit(0);
+    }
+    public static void clearFrame(JFrame f) {
+
     }
 }
