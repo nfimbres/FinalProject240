@@ -22,7 +22,12 @@ public class MenuButtonListener implements ActionListener {
                 JOptionPane.showMessageDialog(null,"There are no playlists to edit.");
             }
         } else if(this.option==2) {
-            Main.shufflePlaylist();
+            if(Main.playlists.size()>0) {
+                Main.shufflePlaylist();
+                Main.mainFrame.setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(null,"There are no playlists to shuffle.");
+            }
         } else if(this.option==3) {
             try {
                 Main.exit();
