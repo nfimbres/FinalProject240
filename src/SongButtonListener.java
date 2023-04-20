@@ -39,9 +39,11 @@ public class SongButtonListener implements ActionListener {
             artist.setText("");
             rating.setText("");
         } else if(option==1) {
-            Main.clearFrame(Main.editplaylistFrame);
-            Main.editplaylistFrame.dispose();
-            Main.mainFrame.setVisible(true);
+            try {
+                Main.removeSong(playlist,song);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 }

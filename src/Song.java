@@ -37,7 +37,7 @@ public class Song  implements Comparable<Song>{
     }
     public String songDetails() {
 
-        return this.name + " by " + this.artist + " : " + this.rating;
+        return this.name + " by " + this.artist + " - " + this.rating + "/5";
     }
     @Override
     public int compareTo(Song s) {
