@@ -3,13 +3,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+/**
+ * this class allows for information from text fields to be stored
+ */
 public class TextFieldListener implements ActionListener {
     private JTextField textField; // variable for text field
-    public TextFieldListener(JTextField t) { //constructor
+
+    /**
+     * constructor
+     * @param t JTextField
+     */
+    public TextFieldListener(JTextField t) {
         textField = t;
     }
+
+    /**
+     * determines what happens when the button is clicked
+     * @param e the event to be processed
+     */
     @Override
-    public void actionPerformed(ActionEvent e) { // method for when the button is clicked
+    public void actionPerformed(ActionEvent e) {
         String playlistName = textField.getText();
         JOptionPane.showMessageDialog(null,playlistName+ " has been created.");
         Playlist playlist;
