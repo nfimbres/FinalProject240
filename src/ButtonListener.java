@@ -46,6 +46,8 @@ public class ButtonListener implements ActionListener {
             Main.removeSongs();
         } else if(this.option==6) {
             Main.clearFrame(Main.editplaylistFrame);
+            Main.editplaylistFrame.dispose();
+            Main.mainFrame.setVisible(true);
 
         }
     }
