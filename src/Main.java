@@ -102,10 +102,10 @@ public class Main {
         setFrame(panel, sortPlaylistFrame,"Select a sorting method");
 
         //buttons
-        addButton("Shuffle",playlist, panel, sortPlaylistFrame,9);
-        addButton("By Name",playlist, panel, sortPlaylistFrame,10);
-        addButton("By Artist",playlist, panel, sortPlaylistFrame,11);
-        addButton("By Rating",playlist, panel, sortPlaylistFrame,12);
+        addButton("Shuffle",playlist, panel, sortPlaylistFrame,10);
+        addButton("By Name",playlist, panel, sortPlaylistFrame,11);
+        addButton("By Artist",playlist, panel, sortPlaylistFrame,12);
+        addButton("By Rating",playlist, panel, sortPlaylistFrame,13);
 
         //display
         displayFrame(panel, sortPlaylistFrame);
@@ -153,7 +153,7 @@ public class Main {
     public static void addButton(String text, JPanel panel, JFrame frame, int option) {
         JButton button = new JButton(text);
         button.setFont(defaultFont);
-        if(option==8) {
+        if(option==8 || option==9) {
             button.addActionListener(new ButtonListener(frame,option));
         } else {
             button.addActionListener(new ButtonListener(option));
@@ -197,7 +197,7 @@ public class Main {
     }
     public static void displayFrame(JPanel panel, JFrame frame) {
         frame.add(panel);
-        frame.setSize(500,500);
+        frame.setSize(750,500);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
@@ -222,7 +222,7 @@ public class Main {
 
         addSongInfoButton("Add", panel,playlist,title,artist,rating);
         addLabel(" ", panel);
-        addButton("Done", panel, editplaylistFrame,8);
+        addButton("Done", panel, editplaylistFrame,9);
 
         displayFrame(panel,editplaylistFrame);
     }
@@ -234,6 +234,8 @@ public class Main {
         for (Song s : playlist.getSongs()) {
             addSongButton(s.getName(),playlist,s,panel,1);
         }
+        addLabel(" ", panel);
+        addButton("Done", panel, editplaylistFrame,9);
         displayFrame(panel, editplaylistFrame);
     }
     public static void removeSong(Playlist playlist, Song song) throws IOException {
@@ -242,8 +244,7 @@ public class Main {
         playlist.save();
         JOptionPane.showMessageDialog(null,song.getName()+" has been deleted.");
         clearFrame(editplaylistFrame);
-        editplaylistFrame.dispose();
-        mainFrame.setVisible(true);
+        deleteSongs(playlist);
     }
     public static void removePlaylist(Playlist playlist) {
         playlists.remove(playlist);
@@ -267,7 +268,7 @@ public class Main {
             addLabel("This playlist is empty.", panel);
         }
         addLabel(" ", panel);
-        addButton("Done", panel, viewPlaylistFrame,8);
+        addButton("Done", panel, viewPlaylistFrame,9);
         displayFrame(panel, viewPlaylistFrame);
     }
 }

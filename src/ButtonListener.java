@@ -72,7 +72,11 @@ public class ButtonListener implements ActionListener {
             Main.clearFrame(frame);
             frame.dispose();
             Main.mainFrame.setVisible(true);
-        } else if(this.option==9) { // shuffle button
+        } else if(this.option==9) { // back button
+            Main.clearFrame(frame);
+            frame.dispose();
+            Main.choosePlaylistFrame.setVisible(true);
+        } else if(this.option==10) { // shuffle button
             playlist.shuffle();
             try {
                 playlist.save();
@@ -80,8 +84,8 @@ public class ButtonListener implements ActionListener {
                 throw new RuntimeException(ex);
             }
             Main.viewPlaylist(playlist);
-        } else if(this.option>=10 && this.option<=12) { // sort by name button
-            playlist.sort(option-10);
+        } else if(this.option>=11 && this.option<=13) { // sort by name button
+            playlist.sort(option);
             try {
                 playlist.save();
             } catch (IOException ex) {

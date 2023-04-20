@@ -15,18 +15,15 @@ public class PlaylistButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent e) { // method for when the button is clicked
         if(option==0) {
             Main.editPlaylist(playlist);
-            Main.clearFrame(Main.choosePlaylistFrame);
-            Main.choosePlaylistFrame.dispose();
+            Main.choosePlaylistFrame.setVisible(false);
         } else if (option==1) {
             Main.removePlaylist(playlist);
         } else if (option==2) {
             Main.viewPlaylist(playlist);
-            Main.clearFrame(Main.choosePlaylistFrame);
-            Main.choosePlaylistFrame.dispose();
+            Main.choosePlaylistFrame.setVisible(false);
         } else if (option==3) {
             Main.sortPlaylist(playlist);
-            Main.clearFrame(Main.choosePlaylistFrame);
-            Main.choosePlaylistFrame.dispose();
+            Main.choosePlaylistFrame.setVisible(false);
         }
     }
 }
