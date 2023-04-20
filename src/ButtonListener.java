@@ -2,96 +2,80 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.Collections;
 
 public class ButtonListener implements ActionListener {
     private int option;
     private Playlist playlist;
-    private JFrame frame;
     public ButtonListener(int option) {
         this.option = option;
     }
-    public ButtonListener(JFrame frame,int option) {
-        this.frame = frame;
+    public ButtonListener(Playlist playlist,int option) {
+        this.playlist = playlist;
         this.option = option;
     }
-    public ButtonListener(Playlist p, JFrame frame, int option) {
-        this.playlist = p;
-        this.option = option;
+    public void selectPlaylist(String action) {
+        if(Main.playlists.size()>0) {
+            Main.clearFrame();
+            Main.playlistMenu(option-1);
+        } else {
+            JOptionPane.showMessageDialog(null,"There are no playlists to "+action+".");
+        }
     }
     @Override
     public void actionPerformed(ActionEvent e) { // method for when the button is clicked
-        if(this.option==0) { //new playlist
+        if (option == 0) { // create playlist
+            Main.clearFrame();
             Main.createPlaylist();
-            Main.mainFrame.setVisible(false);
-        } else if(this.option==1) { // delete playlist
-            if(Main.playlists.size()>0) {
-                Main.choosePlaylist(1);
-                Main.mainFrame.setVisible(false);
-            } else {
-                JOptionPane.showMessageDialog(null,"There are no playlists to delete.");
-            }
-        } else if(this.option==2) { // view playlist
-            if(Main.playlists.size()>0) {
-                Main.choosePlaylist(2);
-                Main.mainFrame.setVisible(false);
-            } else {
-                JOptionPane.showMessageDialog(null,"There are no playlists to view.");
-            }
-        } else if(this.option==3) { // edit playlist
-            if(Main.playlists.size()>0) {
-                Main.choosePlaylist(0);
-                Main.mainFrame.setVisible(false);
-            } else {
-                JOptionPane.showMessageDialog(null,"There are no playlists to edit.");
-            }
-        } else if(this.option==4) { // reorder playlist
-            if(Main.playlists.size()>0) {
-                Main.choosePlaylist(3);
-                Main.mainFrame.setVisible(false);
-            } else {
-                JOptionPane.showMessageDialog(null,"There are no playlists to reorder.");
-            }
-        } else if(this.option==5) { // exit
-            try {
-                Main.exit();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        } else if(this.option==6) { // add songs
-            Main.clearFrame(Main.editplaylistFrame);
-            Main.addSongs(this.playlist);
-        } else if(this.option==7) { // remove songs
-            if(this.playlist.getSongs().size()>0) {
-                Main.clearFrame(Main.editplaylistFrame);
-                Main.deleteSongs(this.playlist);
-            } else {
-                JOptionPane.showMessageDialog(null,"There are no songs to delete.");
-            }
-        } else if(this.option==8) { // back button
-            Main.clearFrame(frame);
-            frame.dispose();
-            Main.mainFrame.setVisible(true);
-        } else if(this.option==9) { // back button
-            Main.clearFrame(frame);
-            frame.dispose();
-            Main.choosePlaylistFrame.setVisible(true);
-        } else if(this.option==10) { // shuffle button
-            playlist.shuffle();
-            try {
-                playlist.save();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-            Main.viewPlaylist(playlist);
-        } else if(this.option>=11 && this.option<=13) { // sort by name button
+        } else if (option == 1) { // delete playlist
+            selectPlaylist("delete");
+        } else if (option == 2) { // view playlist
+            selectPlaylist("view");
+        } else if (option == 3) { // edit playlist
+            selectPlaylist("edit");
+        } else if (this.option == 4) { // sort playlist
+            selectPlaylist("sort");
+        } else if (this.option == 5) { // back button
+            Main.clearFrame();
+            Main.panel.remove(Main.playlistName);
+            Main.panel.revalidate();
+            Main.panel.repaint();
+            Main.mainMenu();
+        } else if (this.option == 6) { // back button
+            Main.clearFrame();
+            Main.panel.remove(Main.playlistName);
+            Main.panel.revalidate();
+            Main.panel.repaint();
+            Main.playlistMenu(2);
+        } else if (this.option == 7) { // back button
+            Main.clearFrame();
+            Main.panel.remove(Main.playlistName);
+            Main.panel.revalidate();
+            Main.panel.repaint();
+            Main.playlistMenu(3);
+        } else if (this.option > 7 && this.option < 12) { // sort button
             playlist.sort(option);
             try {
                 playlist.save();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-            Main.viewPlaylist(playlist);
+            String message = "";
+            if(playlist.getSongs().size()>0) {
+                int i = 1;
+                for (Song s : playlist.getSongs()) {
+                    message = message + i + ". " + s.songDetails()+"\n";
+                    i++;
+                }
+                JOptionPane.showMessageDialog(null,playlist.getName()+"\n"+message);
+            } else {
+                JOptionPane.showMessageDialog(null,"This playlist is empty.");
+            }
+        } else if (this.option == -1) { // exit
+            try {
+                Main.exit();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 }

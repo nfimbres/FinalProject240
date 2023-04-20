@@ -8,107 +8,139 @@ import javax.swing.border.EmptyBorder;
 
 public class Main {
     public static ArrayList<Playlist> playlists = new ArrayList<>();
-    public static JFrame mainFrame = new JFrame();
-    public static JPanel mainPanel = new JPanel();
-    public static JFrame newPlaylistFrame = new JFrame();
-    public static JFrame choosePlaylistFrame = new JFrame();
-    public static JFrame editplaylistFrame = new JFrame();
-    public static JFrame viewPlaylistFrame = new JFrame();
-    public static JFrame sortPlaylistFrame = new JFrame();
+    public static JFrame frame = new JFrame();
+    public static JPanel panel = new JPanel();
     public static Font defaultFont = new Font(Font.MONOSPACED, Font.PLAIN,  16);
     public static Font  titleFont  = new Font(Font.MONOSPACED, Font.ITALIC,  24);
+    public static JTextField playlistName = new JTextField();
 
     public static void main(String[] args) throws IOException {
         //download playlists from directory
         getPlaylists();
 
-        //create frame
-        JFrame.setDefaultLookAndFeelDecorated(true);
-        setFrame(mainPanel,mainFrame,"Playlist Editor");
-
-        //buttons
-        addButton("Create Playlist",mainPanel,mainFrame,0);
-        addButton("Delete Playlist",mainPanel,mainFrame,1);
-        addButton("View Playlist",mainPanel,mainFrame,2);
-        addButton("Edit Playlist",mainPanel,mainFrame,3);
-        addButton("Sort Playlist",mainPanel,mainFrame,4);
-        addButton("Exit",mainPanel,mainFrame,5);
-
-        //display
-        displayFrame(mainPanel, mainFrame);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBorder(new EmptyBorder(new Insets(100, 10, 100, 10)));
+        frame.add(panel);
+        frame.setSize(750,500);
+        frame.setLocationRelativeTo(null);
+        mainMenu();
+    }
+    public static void mainMenu(){
+        setFrame("Playlist Editor");
+        addButton("Create Playlist",0);
+        addButton("Delete Playlist",1);
+        addButton("View Playlist",2);
+        addButton("Edit Playlist",3);
+        addButton("Sort Playlist",4);
+        addButton("Exit",-1);
+        displayFrame();
     }
     public static void createPlaylist(){
-        JPanel panel = new JPanel();
         panel.setFont(defaultFont);
-        setFrame(panel, newPlaylistFrame,"Playlist Name");
-
-        //buttons
-        JTextField textField = new JTextField();
-        textField.setHorizontalAlignment(JTextField.CENTER);
-        textField.setMaximumSize(new Dimension(300,35));
-        textField.setFont(defaultFont);
-        panel.add(textField);
-        addTextButton("Create", panel,textField);
-        addLabel(" ", panel);
-        addButton("Back", panel, newPlaylistFrame,8);
-
-        //display
-        displayFrame(panel, newPlaylistFrame);
+        setFrame("Playlist Name");
+        playlistName.setHorizontalAlignment(JTextField.CENTER);
+        playlistName.setMaximumSize(new Dimension(300,35));
+        playlistName.setFont(defaultFont);
+        panel.add(playlistName);
+        addTextButton("Create");
+        backButton(0);
     }
-    public static void choosePlaylist(int option){
-        JPanel panel = new JPanel();
-        if(option==0) { // edit playlist
-            setFrame(panel, choosePlaylistFrame, "Edit");
-            //buttons
-            for (Playlist p : playlists) {
-                addPlaylistButton(p.getName(), p, panel,option);
+    public static void playlistMenu(int option){
+        if(option==0) {
+            setFrame("Delete");
+        } else if(option==1) {
+            setFrame("View");
+        } else if(option==2) {
+            setFrame("Edit");
+        } else if(option==3) {
+            setFrame("Sort");
+        }
+        for (Playlist p : playlists) {
+            addPlaylistButton(p.getName(),p,option);
+        }
+        backButton(0);
+        displayFrame();
+    }
+    public static void deletePlaylist(Playlist playlist) {
+        playlists.remove(playlist);
+        File fileToDelete = new File(playlist.getFileName());
+        fileToDelete.delete();
+        JOptionPane.showMessageDialog(null,playlist.getName()+" has been deleted.");
+        clearFrame();
+        playlistMenu(0);
+    }
+    public static void viewPlaylist(Playlist playlist) {
+        String message = "";
+        if(playlist.getSongs().size()>0) {
+            int i = 1;
+            for (Song s : playlist.getSongs()) {
+                message = message + i + ". " + s.songDetails()+"\n";
+                i++;
             }
-        } else if(option==1) { // delete playlist
-            setFrame(panel, choosePlaylistFrame, "Delete");
-            //buttons
-            for (Playlist p : playlists) {
-                addPlaylistButton(p.getName(), p, panel,option);
-            }
-        } else if(option==2) { // view playlist
-            setFrame(panel, choosePlaylistFrame, "View");
-            //buttons
-            for (Playlist p : playlists) {
-                addPlaylistButton(p.getName(),p, panel,option);
-            }
-        } else if(option==3) { // reorder playlist
-            setFrame(panel, choosePlaylistFrame, "Sort");
-            //buttons
-            for (Playlist p : playlists) {
-                addPlaylistButton(p.getName(),p, panel,option);
+            JOptionPane.showMessageDialog(null,playlist.getName()+"\n"+message);
+        } else {
+            JOptionPane.showMessageDialog(null,"This playlist is empty.");
+        }
+        clearFrame();
+        playlistMenu(1);
+    }
+    public static void editPlaylistmenu(Playlist playlist){
+        Object[] options = {"Add Songs", "Remove Songs", "Back"};
+        int result = JOptionPane.showOptionDialog(null,"Add or delete songs?",playlist.getName(),JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE, null, options, null);
+        if(result==JOptionPane.YES_OPTION) {
+            Main.clearFrame();
+            addSongs(playlist);
+        } else if (result==JOptionPane.NO_OPTION) {
+            if (playlist.getSongs().size() > 0) {
+                clearFrame();
+                removeSongs(playlist);
+            } else {
+                JOptionPane.showMessageDialog(null, "There are no songs to delete.");
             }
         }
-        addLabel(" ", panel);
-        addButton("Back", panel, choosePlaylistFrame,8);
-        displayFrame(panel, choosePlaylistFrame);
     }
-    public static void editPlaylist(Playlist playlist){
-        JPanel panel = new JPanel();
-        setFrame(panel, editplaylistFrame,"Add or delete a songs?");
+    public static void addSongs(Playlist playlist) {
+        setFrame("Add");
+        addLabel("Title");
+        JTextField title = new JTextField();
+        title.setMaximumSize(new Dimension(300,25));
+        title.setHorizontalAlignment(JTextField.CENTER);
+        panel.add(title, BorderLayout.CENTER);
+        addLabel("Artist");
+        JTextField artist = new JTextField();
+        artist.setMaximumSize(new Dimension(300,25));
+        artist.setHorizontalAlignment(JTextField.CENTER);
+        panel.add(artist, BorderLayout.CENTER);
+        addLabel("Rating (1-5)");
+        JTextField rating = new JTextField();
+        rating.setMaximumSize(new Dimension(300,25));
+        rating.setHorizontalAlignment(JTextField.CENTER);
+        panel.add(rating, BorderLayout.CENTER);
 
-        //buttons
-        addButton("Add",playlist, panel, editplaylistFrame,6);
-        addButton("Delete",playlist, panel, editplaylistFrame,7);
+        addSongInfoButton("Add",playlist,title,artist,rating);
+        backButton(1);
 
-        //display
-        displayFrame(panel, editplaylistFrame);
+        displayFrame();
     }
+    public static void removeSongs(Playlist playlist) {
+        setFrame("Select a song to delete");
+        for (Song s : playlist.getSongs()) {
+            addSongButton(s.getName(),playlist,s,1);
+        }
+        backButton(1);
+        displayFrame();
+    }
+
     public static void sortPlaylist(Playlist playlist){
-        JPanel panel = new JPanel();
-        setFrame(panel, sortPlaylistFrame,"Select a sorting method");
-
-        //buttons
-        addButton("Shuffle",playlist, panel, sortPlaylistFrame,10);
-        addButton("By Name",playlist, panel, sortPlaylistFrame,11);
-        addButton("By Artist",playlist, panel, sortPlaylistFrame,12);
-        addButton("By Rating",playlist, panel, sortPlaylistFrame,13);
-
-        //display
-        displayFrame(panel, sortPlaylistFrame);
+        Main.clearFrame();
+        setFrame("Select a sorting method");
+        addButton("Shuffle",playlist,8);
+        addButton("By Name",playlist,9);
+        addButton("By Artist",playlist,10);
+        addButton("By Rating",playlist,11);
+        backButton(2);
+        displayFrame();
     }
     public static void getPlaylists() throws FileNotFoundException {
         File folder = new File("./playlists/");
@@ -117,62 +149,66 @@ public class Main {
             playlists.add(new Playlist(String.valueOf(f),1));
         }
     }
-    public static void addLabel(String text, JPanel p) {
+    public static void addLabel(String text) {
         JLabel label = new JLabel(text);
         label.setFont(defaultFont);
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
-        p.add(label);
+        panel.add(label);
     }
-    public static void addTitle(String text, JPanel p) {
+    public static void addTitle(String text) {
         JLabel label = new JLabel(text);
         label.setFont(titleFont);
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
-        p.add(label);
+        panel.add(label);
     }
-    public static void addPlaylistButton(String text, Playlist playlist, JPanel panel, int option) {
+    public static void addPlaylistButton(String text, Playlist playlist, int option) {
         JButton button = new JButton(text);
         button.setFont(defaultFont);
         button.addActionListener(new PlaylistButtonListener(playlist,option));
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(button);
     }
-    public static void addSongButton(String text, Playlist playlist, Song song, JPanel panel, int option) {
+    public static void addSongButton(String text, Playlist playlist, Song song, int option) {
         JButton button = new JButton(text);
         button.setFont(defaultFont);
         button.addActionListener(new SongButtonListener(playlist,song,option));
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(button);
     }
-    public static void addButton(String text, Playlist playlist, JPanel panel, JFrame frame, int option) {
-        JButton button = new JButton(text);
+    public static void backButton(int option) {
+        addLabel(" ");
+        JButton button = new JButton("Back");
         button.setFont(defaultFont);
-        button.addActionListener(new ButtonListener(playlist,frame,option));
+        button.addActionListener(new ButtonListener((option==0) ? 5 : (option==1) ? 6 : 7));
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(button);
     }
-    public static void addButton(String text, JPanel panel, JFrame frame, int option) {
+    public static void addButton(String text, Playlist playlist, int option) {
         JButton button = new JButton(text);
         button.setFont(defaultFont);
-        if(option==8 || option==9) {
-            button.addActionListener(new ButtonListener(frame,option));
-        } else {
-            button.addActionListener(new ButtonListener(option));
-        }
+        button.addActionListener(new ButtonListener(playlist,option));
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel.add(button);
+    }
+    public static void addButton(String text,int option) {
+        JButton button = new JButton(text);
+        button.setFont(defaultFont);
+        button.addActionListener(new ButtonListener(option));
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(button);
 
     }
-    public static void addSongInfoButton(String text, JPanel panel, Playlist p,JTextField t, JTextField a, JTextField r) {
+    public static void addSongInfoButton(String text, Playlist p, JTextField t, JTextField a, JTextField r) {
         JButton button = new JButton(text);
         button.setFont(defaultFont);
         button.addActionListener(new SongButtonListener(p,t,a,r,0));
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(button);
     }
-    public static void addTextButton(String text, JPanel panel, JTextField t) {
+    public static void addTextButton(String text) {
         JButton button = new JButton(text);
         button.setFont(defaultFont);
-        button.addActionListener(new TextFieldListener(t));
+        button.addActionListener(new TextFieldListener(playlistName));
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(button);
     }
@@ -185,90 +221,25 @@ public class Main {
         save();
         System.exit(0);
     }
-    public static void clearFrame(JFrame frame) {
-        frame.getContentPane().removeAll();
+    public static void clearFrame() {
+        panel.removeAll();
+        panel.remove(playlistName);
+        panel.revalidate();
+        panel.repaint();
     }
-    public static void setFrame(JPanel panel, JFrame frame, String label) {
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(new EmptyBorder(new Insets(100, 10, 10, 25)));
-        addTitle(label, panel);
-        addTitle(" ", panel);
+    public static void setFrame(String label) {
+        addTitle(label);
+        addTitle(" ");
     }
-    public static void displayFrame(JPanel panel, JFrame frame) {
-        frame.add(panel);
-        frame.setSize(750,500);
-        frame.setLocationRelativeTo(null);
+    public static void displayFrame() {
         frame.setVisible(true);
-    }
-    public static void addSongs(Playlist playlist) {
-        JPanel panel = new JPanel();
-        setFrame(panel, editplaylistFrame,"Add");
-        addLabel("Title", panel);
-        JTextField title = new JTextField();
-        title.setMaximumSize(new Dimension(300,25));
-        title.setHorizontalAlignment(JTextField.CENTER);
-        panel.add(title, BorderLayout.CENTER);
-        addLabel("Artist", panel);
-        JTextField artist = new JTextField();
-        artist.setMaximumSize(new Dimension(300,25));
-        artist.setHorizontalAlignment(JTextField.CENTER);
-        panel.add(artist, BorderLayout.CENTER);
-        addLabel("Rating (1-5)", panel);
-        JTextField rating = new JTextField();
-        rating.setMaximumSize(new Dimension(300,25));
-        rating.setHorizontalAlignment(JTextField.CENTER);
-        panel.add(rating, BorderLayout.CENTER);
-
-        addSongInfoButton("Add", panel,playlist,title,artist,rating);
-        addLabel(" ", panel);
-        addButton("Done", panel, editplaylistFrame,9);
-
-        displayFrame(panel,editplaylistFrame);
-    }
-    public static void deleteSongs(Playlist playlist) {
-        JPanel panel = new JPanel();
-        setFrame(panel, editplaylistFrame, "Select a song to delete");
-
-        //buttons
-        for (Song s : playlist.getSongs()) {
-            addSongButton(s.getName(),playlist,s,panel,1);
-        }
-        addLabel(" ", panel);
-        addButton("Done", panel, editplaylistFrame,9);
-        displayFrame(panel, editplaylistFrame);
     }
     public static void removeSong(Playlist playlist, Song song) throws IOException {
 
         playlist.getSongs().remove(song);
         playlist.save();
         JOptionPane.showMessageDialog(null,song.getName()+" has been deleted.");
-        clearFrame(editplaylistFrame);
-        deleteSongs(playlist);
-    }
-    public static void removePlaylist(Playlist playlist) {
-        playlists.remove(playlist);
-        File fileToDelte = new File(playlist.getFileName());
-        fileToDelte.delete();
-        JOptionPane.showMessageDialog(null,playlist.getName()+" has been deleted.");
-        clearFrame(choosePlaylistFrame);
-        choosePlaylistFrame.dispose();
-        mainFrame.setVisible(true);
-    }
-    public static void viewPlaylist(Playlist playlist) {
-        JPanel panel = new JPanel();
-        setFrame(panel, viewPlaylistFrame,playlist.getName());
-        if(playlist.getSongs().size()>0) {
-            int i = 1;
-            for (Song s : playlist.getSongs()) {
-                addLabel(i + ". " + s.songDetails(), panel);
-                i++;
-            }
-        } else {
-            addLabel("This playlist is empty.", panel);
-        }
-        addLabel(" ", panel);
-        addButton("Done", panel, viewPlaylistFrame,9);
-        displayFrame(panel, viewPlaylistFrame);
+        clearFrame();
+        removeSongs(playlist);
     }
 }

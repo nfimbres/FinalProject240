@@ -48,11 +48,13 @@ public class Playlist {
         Collections.shuffle(songs);
     }
     public void sort(int order) {
-        if(order==11) {
+        if(order==8) {
+            Collections.shuffle(songs);
+        } else if (order==9) {
             Collections.sort(songs, new OrderByName());
-        } else if (order==12) {
+        } else if (order==10) {
             Collections.sort(songs, new OrderByArtist());
-        } else if (order==13) {
+        } else if (order==11) {
             Collections.sort(songs, new OrderByRating());
         }
     }

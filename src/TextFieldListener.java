@@ -20,8 +20,8 @@ public class TextFieldListener implements ActionListener {
             throw new RuntimeException(ex);
         }
         Main.playlists.add(playlist);
-        Main.clearFrame(Main.newPlaylistFrame);
-        Main.newPlaylistFrame.dispose();
-        Main.mainFrame.setVisible(true);
+        Main.clearFrame();
+        this.textField.removeAll();
+        Main.mainMenu();
         }
 }

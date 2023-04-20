@@ -1,8 +1,5 @@
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 public class PlaylistButtonListener implements ActionListener {
     private Playlist playlist;
@@ -14,16 +11,13 @@ public class PlaylistButtonListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) { // method for when the button is clicked
         if(option==0) {
-            Main.editPlaylist(playlist);
-            Main.choosePlaylistFrame.setVisible(false);
+            Main.deletePlaylist(playlist);
         } else if (option==1) {
-            Main.removePlaylist(playlist);
-        } else if (option==2) {
             Main.viewPlaylist(playlist);
-            Main.choosePlaylistFrame.setVisible(false);
+        } else if (option==2) {
+            Main.editPlaylistmenu(playlist);
         } else if (option==3) {
             Main.sortPlaylist(playlist);
-            Main.choosePlaylistFrame.setVisible(false);
         }
     }
 }
