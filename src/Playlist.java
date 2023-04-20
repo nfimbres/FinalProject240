@@ -47,8 +47,14 @@ public class Playlist {
     public void shuffle() {
         Collections.shuffle(songs);
     }
-    public void reorder(int order) {
-        Collections.sort(songs);
+    public void sort(int order) {
+        if(order==0) {
+            Collections.sort(songs, new OrderByName());
+        } else if (order==1) {
+            Collections.sort(songs, new OrderByArtist());
+        } else if (order==2) {
+            Collections.sort(songs, new OrderByRating());
+        }
     }
     public String getName() {
         return name;

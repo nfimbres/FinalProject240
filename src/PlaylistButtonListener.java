@@ -23,6 +23,10 @@ public class PlaylistButtonListener implements ActionListener {
             Main.viewPlaylist(playlist);
             Main.clearFrame(Main.choosePlaylistFrame);
             Main.choosePlaylistFrame.dispose();
+        } else if (option==3) {
+            Main.sortPlaylist(playlist);
+            Main.clearFrame(Main.choosePlaylistFrame);
+            Main.choosePlaylistFrame.dispose();
         }
     }
 }

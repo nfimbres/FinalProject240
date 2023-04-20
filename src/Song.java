@@ -1,6 +1,7 @@
 import java.io.PrintWriter;
+import java.util.Comparator;
 
-public class Song  implements Comparable<Song>{
+public class Song{
     private String name;
     private String artist;
     private int rating;
@@ -39,10 +40,22 @@ public class Song  implements Comparable<Song>{
 
         return this.name + " by " + this.artist + " - " + this.rating + "/5";
     }
+}
+class OrderByName implements Comparator<Song>{
     @Override
-    public int compareTo(Song s) {
-        Integer rating = this.rating;
-        Integer sRating = s.getRating();
-        return rating.compareTo(sRating);
+    public int compare(Song s1, Song s2) {
+        return s1.getName().compareTo(s2.getName());
+    }
+}
+class OrderByArtist implements Comparator<Song>{
+    @Override
+    public int compare(Song s1, Song s2) {
+        return s1.getArtist().compareTo(s2.getArtist());
+    }
+}
+class OrderByRating implements Comparator<Song>{
+    @Override
+    public int compare(Song s1, Song s2) {
+        return s2.getRating() - s1.getRating();
     }
 }
