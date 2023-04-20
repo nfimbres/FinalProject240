@@ -151,9 +151,9 @@ public class Main {
         JTextField title = new JTextField();
         editplaylistFrame.getContentPane().add(title);
         JTextField artist = new JTextField();
-        editplaylistFrame.getContentPane().add(title);
+        editplaylistFrame.getContentPane().add(artist);
         JTextField rating = new JTextField();
-        editplaylistFrame.getContentPane().add(title);
+        editplaylistFrame.getContentPane().add(rating);
 
         addButton("Add",editplaylistFrame,p,title,artist,rating);
         addButton("Done",editplaylistFrame,6);
