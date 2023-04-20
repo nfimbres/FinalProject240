@@ -147,11 +147,12 @@ public class Main {
     public static void addSongs(Playlist p) {
         setFrame(editplaylistFrame,false);
         addLabel("Title",editplaylistFrame);
-
         JTextField title = new JTextField();
         editplaylistFrame.getContentPane().add(title);
+        addLabel("Artist",editplaylistFrame);
         JTextField artist = new JTextField();
         editplaylistFrame.getContentPane().add(artist);
+        addLabel("Rating (1-5)",editplaylistFrame);
         JTextField rating = new JTextField();
         editplaylistFrame.getContentPane().add(rating);
 
