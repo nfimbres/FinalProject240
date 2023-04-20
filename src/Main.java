@@ -235,8 +235,7 @@ public class Main {
         frame.setVisible(true);
     }
     public static void removeSong(Playlist playlist, Song song) throws IOException {
-
-        playlist.getSongs().remove(song);
+        playlist.removeSong(song);
         playlist.save();
         JOptionPane.showMessageDialog(null,song.getName()+" has been deleted.");
         clearFrame();

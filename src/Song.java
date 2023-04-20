@@ -42,20 +42,44 @@ public class Song{
     }
 }
 class OrderByName implements Comparator<Song>{
+    private static boolean asc = false;
+    public OrderByName() {
+        asc = !(asc);
+    }
     @Override
     public int compare(Song s1, Song s2) {
-        return s1.getName().compareTo(s2.getName());
+        if(asc) {
+            return s1.getName().compareTo(s2.getName());
+        } else {
+            return s2.getName().compareTo(s1.getName());
+        }
     }
 }
 class OrderByArtist implements Comparator<Song>{
+    private static boolean asc = false;
+    public OrderByArtist() {
+        asc = !(asc);
+    }
     @Override
     public int compare(Song s1, Song s2) {
-        return s1.getArtist().compareTo(s2.getArtist());
+        if(asc) {
+            return s1.getArtist().compareTo(s2.getArtist());
+        } else {
+            return s2.getArtist().compareTo(s1.getArtist());
+        }
     }
 }
 class OrderByRating implements Comparator<Song>{
+    private static boolean asc = true;
+    public OrderByRating() {
+        asc = !(asc);
+    }
     @Override
     public int compare(Song s1, Song s2) {
-        return s2.getRating() - s1.getRating();
+        if(asc) {
+            return s1.getRating()-(s2.getRating());
+        } else {
+            return s2.getRating()-(s1.getRating());
+        }
     }
 }
