@@ -14,6 +14,5 @@ public class PlaylistButtonListener implements ActionListener {
         Main.editPlaylist(playlist);
         Main.clearFrame(Main.choosePlaylistFrame);
         Main.choosePlaylistFrame.dispose();
-        Main.mainFrame.setVisible(true);
     }
 }

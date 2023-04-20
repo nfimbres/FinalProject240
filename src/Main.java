@@ -53,7 +53,7 @@ public class Main {
 
         //buttons
         addButton("Add",editplaylistFrame,4);
-        addButton("Remove",editplaylistFrame,4);
+        addButton("Remove",editplaylistFrame,5);
 
         //display
         displayFrame(editplaylistFrame);
@@ -96,7 +96,12 @@ public class Main {
     }
     public static void addButton(String text, JFrame frame, int option) {
         JButton button = new JButton(text);
-        button.addActionListener(new MenuButtonListener(option));
+        button.addActionListener(new ButtonListener(option));
+        frame.getContentPane().add(button);
+    }
+    public static void addButton(String text, JFrame frame, Playlist p,JTextField t, JTextField a, JTextField r) {
+        JButton button = new JButton(text);
+        button.addActionListener(new SongButtonListener(p,t,a,r,0));
         frame.getContentPane().add(button);
     }
     public static void addButton(String text, JFrame frame, JTextField t) {
@@ -114,7 +119,7 @@ public class Main {
         System.exit(0);
     }
     public static void clearFrame(JFrame frame) {
-
+        frame.getContentPane().removeAll();
     }
     public static void setFrame(JFrame frame, boolean exit) {
         if(exit) {
@@ -122,7 +127,7 @@ public class Main {
         } else {
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         }
-        frame.getContentPane().setLayout(new BoxLayout(newPlaylistFrame.getContentPane(), BoxLayout.Y_AXIS));
+        frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
     }
     public static void setFrame(JFrame frame, String label, boolean exit) {
         if(exit) {
@@ -130,7 +135,7 @@ public class Main {
         } else {
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         }
-        frame.getContentPane().setLayout(new BoxLayout(newPlaylistFrame.getContentPane(), BoxLayout.Y_AXIS));
+        frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
         addLabel(label, frame);
     }
     public static void displayFrame(JFrame frame) {
@@ -138,5 +143,24 @@ public class Main {
         frame.setSize(150,150);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
+    public static void addSongs(Playlist p) {
+        setFrame(editplaylistFrame,false);
+        addLabel("Title",editplaylistFrame);
+
+        JTextField title = new JTextField();
+        editplaylistFrame.getContentPane().add(title);
+        JTextField artist = new JTextField();
+        editplaylistFrame.getContentPane().add(title);
+        JTextField rating = new JTextField();
+        editplaylistFrame.getContentPane().add(title);
+
+        addButton("Add",editplaylistFrame,p,title,artist,rating);
+        addButton("Done",editplaylistFrame,6);
+
+        displayFrame(editplaylistFrame);
+    }
+    public static void removeSongs() {
+
     }
 }
