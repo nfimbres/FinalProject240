@@ -18,7 +18,7 @@ public class ButtonListener implements ActionListener {
             Main.clearFrame();
             Main.playlistMenu(option-1);
         } else {
-            JOptionPane.showMessageDialog(null,"There are no playlists to "+action+".");
+            JOptionPane.showMessageDialog(null,"There are no playlists to " + action + ".");
         }
     }
     @Override

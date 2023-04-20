@@ -27,14 +27,23 @@ public class SongButtonListener implements ActionListener {
         if(option==0) {
             String titleText = title.getText();
             String artistText = artist.getText();
-            int ratingInt = Integer.parseInt(rating.getText());
+            int ratingInt = 0;
+            try {
+                ratingInt = Integer.parseInt(rating.getText());
+                if(ratingInt<1 || ratingInt>5) {
+                    throw new NumberFormatException();
+                }
+            } catch(NumberFormatException n) {
+                JOptionPane.showMessageDialog(null,"Please enter an integer between 1 and 5.");
+                return;
+            }
             playlist.addSong(new Song(titleText, artistText, ratingInt));
             try {
                 playlist.save();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-            JOptionPane.showMessageDialog(null, title.getText() + " has been added to " + playlist.getName());
+            JOptionPane.showMessageDialog(null, title.getText() + " has been added to " + playlist.getName() + ".");
             title.setText("");
             artist.setText("");
             rating.setText("");

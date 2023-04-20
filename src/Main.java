@@ -38,7 +38,7 @@ public class Main {
     }
     public static void createPlaylist(){
         panel.setFont(defaultFont);
-        setFrame("Playlist Name");
+        setFrame("Create a Playlist");
         playlistName.setHorizontalAlignment(JTextField.CENTER);
         playlistName.setMaximumSize(new Dimension(300,35));
         playlistName.setFont(defaultFont);
@@ -48,13 +48,13 @@ public class Main {
     }
     public static void playlistMenu(int option){
         if(option==0) {
-            setFrame("Delete");
+            setFrame("Select a playlist to delete.");
         } else if(option==1) {
-            setFrame("View");
+            setFrame("Select a playlist to view.");
         } else if(option==2) {
-            setFrame("Edit");
+            setFrame("Select a playlist to edit.");
         } else if(option==3) {
-            setFrame("Sort");
+            setFrame("Select a playlist to sort.");
         }
         for (Playlist p : playlists) {
             addPlaylistButton(p.getName(),p,option);
@@ -87,7 +87,7 @@ public class Main {
     }
     public static void editPlaylistmenu(Playlist playlist){
         Object[] options = {"Add Songs", "Remove Songs", "Back"};
-        int result = JOptionPane.showOptionDialog(null,"Add or delete songs?",playlist.getName(),JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE, null, options, null);
+        int result = JOptionPane.showOptionDialog(null,"Select an option below.",playlist.getName(),JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE, null, options, null);
         if(result==JOptionPane.YES_OPTION) {
             Main.clearFrame();
             addSongs(playlist);
@@ -96,12 +96,12 @@ public class Main {
                 clearFrame();
                 removeSongs(playlist);
             } else {
-                JOptionPane.showMessageDialog(null, "There are no songs to delete.");
+                JOptionPane.showMessageDialog(null, "This playlist is empty.");
             }
         }
     }
     public static void addSongs(Playlist playlist) {
-        setFrame("Add");
+        setFrame("Enter new song information below.");
         addLabel("Title");
         JTextField title = new JTextField();
         title.setMaximumSize(new Dimension(300,25));
@@ -112,7 +112,7 @@ public class Main {
         artist.setMaximumSize(new Dimension(300,25));
         artist.setHorizontalAlignment(JTextField.CENTER);
         panel.add(artist, BorderLayout.CENTER);
-        addLabel("Rating (1-5)");
+        addLabel("Integer Rating (1-5)");
         JTextField rating = new JTextField();
         rating.setMaximumSize(new Dimension(300,25));
         rating.setHorizontalAlignment(JTextField.CENTER);
@@ -124,7 +124,7 @@ public class Main {
         displayFrame();
     }
     public static void removeSongs(Playlist playlist) {
-        setFrame("Select a song to delete");
+        setFrame("Select a song to delete.");
         for (Song s : playlist.getSongs()) {
             addSongButton(s.getName(),playlist,s,1);
         }
@@ -134,7 +134,7 @@ public class Main {
 
     public static void sortPlaylist(Playlist playlist){
         Main.clearFrame();
-        setFrame("Select a sorting method");
+        setFrame("Select a sorting method.");
         addButton("Shuffle",playlist,8);
         addButton("By Name",playlist,9);
         addButton("By Artist",playlist,10);
@@ -181,6 +181,7 @@ public class Main {
         button.setFont(defaultFont);
         button.addActionListener(new ButtonListener((option==0) ? 5 : (option==1) ? 6 : 7));
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setAlignmentY(Component.BOTTOM_ALIGNMENT);
         panel.add(button);
     }
     public static void addButton(String text, Playlist playlist, int option) {

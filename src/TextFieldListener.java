@@ -11,7 +11,7 @@ public class TextFieldListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) { // method for when the button is clicked
         String playlistName = textField.getText();
-        JOptionPane.showMessageDialog(null,playlistName+ " has been created");
+        JOptionPane.showMessageDialog(null,playlistName+ " has been created.");
         Playlist playlist;
         try {
             playlist = new Playlist(playlistName,0);
