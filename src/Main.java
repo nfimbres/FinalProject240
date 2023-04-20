@@ -71,14 +71,14 @@ public class Main {
         playlistMenu(0);
     }
     public static void viewPlaylist(Playlist playlist) {
-        String message = "";
+        String message = "\n\nSongs:\n";
         if(playlist.getSongs().size()>0) {
             int i = 1;
             for (Song s : playlist.getSongs()) {
                 message = message + i + ". " + s.songDetails()+"\n";
                 i++;
             }
-            JOptionPane.showMessageDialog(null,playlist.getName()+"\n"+message);
+            JOptionPane.showMessageDialog(null,"Playlist: "+playlist.getName()+message);
         } else {
             JOptionPane.showMessageDialog(null,"This playlist is empty.");
         }
@@ -131,7 +131,6 @@ public class Main {
         backButton(1);
         displayFrame();
     }
-
     public static void sortPlaylist(Playlist playlist){
         Main.clearFrame();
         setFrame("Select a sorting method.");

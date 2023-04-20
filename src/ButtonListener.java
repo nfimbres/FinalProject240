@@ -59,14 +59,14 @@ public class ButtonListener implements ActionListener {
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-            String message = "";
+            String message = "\n\nSongs:\n";
             if(playlist.getSongs().size()>0) {
                 int i = 1;
                 for (Song s : playlist.getSongs()) {
                     message = message + i + ". " + s.songDetails()+"\n";
                     i++;
                 }
-                JOptionPane.showMessageDialog(null,playlist.getName()+"\n"+message);
+                JOptionPane.showMessageDialog(null,"Playlist: "+playlist.getName()+message);
             } else {
                 JOptionPane.showMessageDialog(null,"This playlist is empty.");
             }
