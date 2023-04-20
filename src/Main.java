@@ -52,7 +52,7 @@ public class Main {
         setFrame(editplaylistFrame,"Would you like to add or remove songs",false);
 
         //buttons
-        addButton("Add",editplaylistFrame,4);
+        addButton("Add",playlist,editplaylistFrame,4);
         addButton("Remove",editplaylistFrame,5);
 
         //display
@@ -79,11 +79,6 @@ public class Main {
         for(File f : listOfFiles) {
             playlists.add(new Playlist(String.valueOf(f),1));
         }
-        for(Playlist p : playlists) {
-            for(Song s : p.getSongs()) {
-                JOptionPane.showMessageDialog(null,s.songDetails());
-            }
-        }
     }
     public static void addLabel(String text, JFrame j) {
         JLabel label = new JLabel(text);
@@ -92,6 +87,11 @@ public class Main {
     public static void addButton(String text, JFrame frame, Playlist p) {
         JButton button = new JButton(text);
         button.addActionListener(new PlaylistButtonListener(p));
+        frame.getContentPane().add(button);
+    }
+    public static void addButton(String text, Playlist playlist,JFrame frame, int option) {
+        JButton button = new JButton(text);
+        button.addActionListener(new ButtonListener(playlist,option));
         frame.getContentPane().add(button);
     }
     public static void addButton(String text, JFrame frame, int option) {
@@ -144,7 +144,7 @@ public class Main {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
-    public static void addSongs(Playlist p) {
+    public static void addSongs(Playlist playlist) {
         setFrame(editplaylistFrame,false);
         addLabel("Title",editplaylistFrame);
         JTextField title = new JTextField();
@@ -156,7 +156,7 @@ public class Main {
         JTextField rating = new JTextField();
         editplaylistFrame.getContentPane().add(rating);
 
-        addButton("Add",editplaylistFrame,p,title,artist,rating);
+        addButton("Add",editplaylistFrame,playlist,title,artist,rating);
         addButton("Done",editplaylistFrame,6);
 
         displayFrame(editplaylistFrame);

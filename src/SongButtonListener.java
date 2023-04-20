@@ -24,11 +24,24 @@ public class SongButtonListener implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) { // method for when the button is clicked
-        playlist.addSong(new Song(title.getText(),artist.getText(),Integer.parseInt(rating.getText())));
-        try {
-            playlist.save();
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
+        if(option==0) {
+            String titleText = title.getText();
+            String artistText = artist.getText();
+            int ratingInt = Integer.parseInt(rating.getText());
+            playlist.addSong(new Song(titleText, artistText, ratingInt));
+            try {
+                playlist.save();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            JOptionPane.showMessageDialog(null, title.getText() + " has been added to " + playlist.getName());
+            title.setText("");
+            artist.setText("");
+            rating.setText("");
+        } else if(option==1) {
+            Main.clearFrame(Main.editplaylistFrame);
+            Main.editplaylistFrame.dispose();
+            Main.mainFrame.setVisible(true);
         }
     }
 }

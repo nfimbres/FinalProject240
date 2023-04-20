@@ -7,7 +7,7 @@ public class Song  implements Comparable<Song>{
     public Song(String name, String artist, int rating) {
         this.name = name;
         this.artist = artist;
-        this.rating = 0;
+        this.rating = rating;
     }
     public void save(PrintWriter out) {
         out.print(this.name+"\n");
